@@ -48,15 +48,17 @@ const listeners = {
 const collectedMessages = [];
 
 function hookFunctions() {
-	Game.create = gameCreate;
+	Game.getData = gameGetData;
 	Game.prototype.setupGame = setupGame;
 }
 
-async function gameCreate(view, sessionId) {
-	socket = sessionId ? await this.connect(sessionId) : null;
-	activateCollectingSocketListeners();
-	let gameData = socket ? await this.getData(socket) : {};
-	return new this(view, gameData, sessionId, socket);
+async function gameGetData(socket) {
+	return new Promise(resolve => {
+		socket.emit("world", (world) => {
+			activateCollectingSocketListeners();
+			resolve(world);
+		});
+	});
 }
 
 async function setupGame() {

@@ -2,7 +2,7 @@
 	"name": "catch-up",
 	"title": "Catch Up",
 	"description": "Catch up on changes that were missed during world loading",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"minimumCoreVersion" : "0.8.9",
 	"compatibleCoreVersion" : "0.8.9",
 	"authors": [

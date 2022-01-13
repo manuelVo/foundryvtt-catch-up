@@ -43,6 +43,7 @@ const listeners = {
 	"pullToScene": Scenes._pullToScene,
 	"showEntry": Journal._showEntry,
 	"shareImage": ImagePopout._handleShareImage,
+	"resetFog": FogExploration._onResetFog,
 };
 
 const collectedMessages = [];

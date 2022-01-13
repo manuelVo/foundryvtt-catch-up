@@ -1,48 +1,48 @@
 const listeners = {
 	"modifyDocument": response => {
 		Scenes._resetFog(response);
-      const { request } = response;
-      const isEmbedded = CONST.ENTITY_TYPES.includes(request.parentType);
-      switch ( request.action ) {
-        case "create":
-          if ( isEmbedded ) return CONFIG.DatabaseBackend._handleCreateEmbeddedDocuments(response);
-          else return CONFIG.DatabaseBackend._handleCreateDocuments(response);
-        case "update":
-          if ( isEmbedded ) return CONFIG.DatabaseBackend._handleUpdateEmbeddedDocuments(response);
-          else return CONFIG.DatabaseBackend._handleUpdateDocuments(response);
-        case "delete":
-          if ( isEmbedded ) return CONFIG.DatabaseBackend._handleDeleteEmbeddedDocuments(response);
-          else return CONFIG.DatabaseBackend._handleDeleteDocuments(response);
-        default:
-          throw new Error(`Invalid Document modification action ${request.action} provided`);
-      }
-    },
-	 "disconnect": () => {
-      ui.notifications.error("You have lost connection to the server, attempting to re-establish.");
-    },
-	 "reconnect_failed": () => {
-      ui.notifications.error("Server connection lost.");
-      window.location.href = foundry.utils.getRoute("no");
-    },
-	 "reconnect": () => {
-      ui.notifications.info("Server connection re-established.");
-    },
-	 "pause": pause => {
-      game.togglePause(pause, false);
-    },
-	 "shutdown": () => {
-      ui.notifications.info("The game world is shutting down and you will be returned to the server homepage.", {
-        permanent: true
-      });
-      setTimeout(() => window.location.href = foundry.utils.getRoute("/"), 1000);
-    },
-	 "playAudio": AudioHelper.play,
-    "preloadAudio": AudioHelper.preloadSound,
-	 "userActivity": Users._handleUserActivity,
-    "preloadScene": sceneId => Scenes.instance.preload(sceneId),
-    "pullToScene": Scenes._pullToScene,
-	 "showEntry": Journal._showEntry,
-    "shareImage": ImagePopout._handleShareImage,
+		const { request } = response;
+		const isEmbedded = CONST.ENTITY_TYPES.includes(request.parentType);
+		switch (request.action) {
+			case "create":
+				if (isEmbedded) return CONFIG.DatabaseBackend._handleCreateEmbeddedDocuments(response);
+				else return CONFIG.DatabaseBackend._handleCreateDocuments(response);
+			case "update":
+				if (isEmbedded) return CONFIG.DatabaseBackend._handleUpdateEmbeddedDocuments(response);
+				else return CONFIG.DatabaseBackend._handleUpdateDocuments(response);
+			case "delete":
+				if (isEmbedded) return CONFIG.DatabaseBackend._handleDeleteEmbeddedDocuments(response);
+				else return CONFIG.DatabaseBackend._handleDeleteDocuments(response);
+			default:
+				throw new Error(`Invalid Document modification action ${request.action} provided`);
+		}
+	},
+	"disconnect": () => {
+		ui.notifications.error("You have lost connection to the server, attempting to re-establish.");
+	},
+	"reconnect_failed": () => {
+		ui.notifications.error("Server connection lost.");
+		window.location.href = foundry.utils.getRoute("no");
+	},
+	"reconnect": () => {
+		ui.notifications.info("Server connection re-established.");
+	},
+	"pause": pause => {
+		game.togglePause(pause, false);
+	},
+	"shutdown": () => {
+		ui.notifications.info("The game world is shutting down and you will be returned to the server homepage.", {
+			permanent: true
+		});
+		setTimeout(() => window.location.href = foundry.utils.getRoute("/"), 1000);
+	},
+	"playAudio": AudioHelper.play,
+	"preloadAudio": AudioHelper.preloadSound,
+	"userActivity": Users._handleUserActivity,
+	"preloadScene": sceneId => Scenes.instance.preload(sceneId),
+	"pullToScene": Scenes._pullToScene,
+	"showEntry": Journal._showEntry,
+	"shareImage": ImagePopout._handleShareImage,
 };
 
 const collectedMessages = [];

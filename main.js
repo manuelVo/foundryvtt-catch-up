@@ -2,7 +2,7 @@ const listeners = {
 	"modifyDocument": response => {
 		Scenes._resetFog(response);
 		const { request } = response;
-		const isEmbedded = CONST.ENTITY_TYPES.includes(request.parentType);
+		const isEmbedded = CONST.DOCUMENT_TYPES.includes(request.parentType);
 		switch (request.action) {
 			case "create":
 				if (isEmbedded) return CONFIG.DatabaseBackend._handleCreateEmbeddedDocuments(response);
@@ -70,13 +70,15 @@ async function setupGame() {
 
 	// Data initialization
 	this.initializePacks();     // Do this first since entities may reference compendium content
-	this.initializeEntities();  // Next initialize world-level entities
+	this.initializeDocuments();  // Next initialize world-level documents
 	this.initializeRTC();       // Intentionally async
 
 	// Interface initialization
+	this.initializeMouse();
+	this.initializeGamepads();
 	this.initializeKeyboard();
 	this.initializeUI();
-	EntitySheetConfig.initializeSheets();
+	DocumentSheetConfig.initializeSheets();
 
 	// Canvas initialization
 	await this.initializeCanvas();
@@ -90,6 +92,10 @@ async function setupGame() {
 
 	// Call all game ready hooks
 	this.ready = true;
+
+	// Initialize New User Experience
+	this.nue.initialize();
+
 	/**
 	 * A hook event that fires when the game is fully ready.
 	 * @function ready

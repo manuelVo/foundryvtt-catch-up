@@ -18,6 +18,7 @@
 	"url": "https://github.com/manuelVo/foundryvtt-catch-up",
 	"download": "https://github.com/manuelVo/foundryvtt-catch-up/archive/refs/heads/master.zip",
 	"manifest": "https://raw.githubusercontent.com/manuelVo/foundryvtt-catch-up/master/module.json",
+	"readme": "https://github.com/manuelVo/foundryvtt-catch-up/blob/master/README.md",
 	"bugs": "https://github.com/manuelVo/foundryvtt-catch-up/issues",
 	"allowBugReporter": true
 }

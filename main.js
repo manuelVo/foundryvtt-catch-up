@@ -124,6 +124,13 @@ async function catchUp() {
 	while (collectedMessages.length > 0) {
 		const [type, message] = collectedMessages.shift();
 		await listeners[type](message);
+		// If no scene is currently loading this will return immediately.
+		await waitForSceneLoad();
+
+		// Some actions (for example moving tokens) don't execute porperly if performed in rapid successeion
+		// Sleep a little to hopefully avoid this issue
+		// userActivity and pause are known to be unproblematic.
+		// userActivity fires often enough to make the process extremely sluggish, so we don't wait after those events
 		if (type !== "userActivity" && type !== "pause")
 			await sleep(100);
 	}
@@ -132,6 +139,12 @@ async function catchUp() {
 
 async function sleep(time) {
 	return new Promise(resolve => window.setTimeout(resolve, time));
+}
+
+async function waitForSceneLoad() {
+	while (canvas.loading) {
+		await sleep(100);
+	}
 }
 
 hookFunctions();
